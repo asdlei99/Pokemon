@@ -26,27 +26,6 @@ int Game::init(const char* title, int xpos, int ypos, int width, int height, int
 
     if (m_pRenderer != nullptr)
     {
-        SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-        pTempSurface = IMG_Load("../ressource/img/pokemon_anim.png");
-        pTempSurface2 = IMG_Load("../ressource/img/test.png");
-        pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-        pTexture2 = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface2);
-        m_sourceRectangle.x = 0;
-        m_sourceRectangle.y = 128;
-        m_destinationRectangle.x = 28;
-        m_destinationRectangle.y = 0;
-        m_sourceRectangle.h = m_destinationRectangle.h = 64;
-        m_sourceRectangle.w = m_destinationRectangle.w = 64;
-
-        m_sourceRectangle2.x = 0;
-        m_sourceRectangle2.y = 0;
-        m_sourceRectangle2.w = 64;
-        m_sourceRectangle2.h = 64;
-        m_destinationRectangle2.x = 0;
-        m_destinationRectangle2.y = 17;
-        m_destinationRectangle2.w = 55;
-        m_destinationRectangle2.h = 55;
-
 
     }
 
@@ -70,18 +49,12 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    m_sourceRectangle.x = 64 * int((SDL_GetTicks() / 200) % 4);
-    m_destinationRectangle.x += 1;
-    m_sourceRectangle2.x = 64 * int((SDL_GetTicks() / 200) % 4);
-    m_destinationRectangle2.x += 1;
+
 }
 
 void Game::render()
 {
-    SDL_RenderClear(m_pRenderer);
-    SDL_RenderCopy(m_pRenderer, pTexture, &m_sourceRectangle, &m_destinationRectangle);
-    SDL_RenderCopy(m_pRenderer, pTexture2, &m_sourceRectangle2, &m_destinationRectangle2);
-    SDL_RenderPresent(m_pRenderer);
+
 }
 
 void Game::clean()
