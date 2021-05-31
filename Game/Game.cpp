@@ -24,10 +24,8 @@ int Game::init(const char* title, int xpos, int ypos, int width, int height, int
     else
         return -1;
 
-    if (mpRenderer != nullptr)
-    {
-
-    }
+    if (mpRenderer == nullptr)
+        return -1;
 
     this->mbRunning = true;
     return 0;
