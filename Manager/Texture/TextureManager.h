@@ -3,6 +3,8 @@
 
 class TextureManager
 {
+public:
+    bool load (char* filePath, char* id, SDL_Renderer* pRenderer);
 
 };
 

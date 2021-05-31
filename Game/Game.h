@@ -8,9 +8,9 @@ class Game
 {
 
 private:
-    bool m_bRunning;
-    SDL_Window* m_pWindow;
-    SDL_Renderer* m_pRenderer;
+    bool mbRunning;
+    SDL_Window* mpWindow;
+    SDL_Renderer* mpRenderer;
 
 public:
     Game();
@@ -21,7 +21,6 @@ public:
     void update();
     void handleEvents();
     void clean();
-
     bool isRunnig();
 };
 
