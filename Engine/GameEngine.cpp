@@ -1,7 +1,9 @@
 #include "GameEngine.h"
 
 GameEngine::GameEngine()
-= default;
+{
+    this->SetTargetFrameRate(DEFAULT_TARGET_FRAME_RATE);
+}
 
 GameEngine::~GameEngine()
 {
@@ -10,10 +12,13 @@ GameEngine::~GameEngine()
     SDL_Quit();
 }
 
-int GameEngine::Init(const char* title, int xpos, int ypos, int width, int height, int flags)
+int GameEngine::Init(char* title, int xpos, int ypos, int width, int height, int flags)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
-        mpWindow = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+    {
+        mpTitle = title;
+        mpWindow = SDL_CreateWindow(mpTitle, xpos, ypos, width, height, flags);
+    }
     else
         return -1;
 
@@ -31,7 +36,7 @@ int GameEngine::Init(const char* title, int xpos, int ypos, int width, int heigh
 
 void GameEngine::MainLoop()
 {
-    while (this->IsRunnig())
+    while (mbRunning)
     {
         auto frameStart = SDL_GetTicks();
 
@@ -41,9 +46,15 @@ void GameEngine::MainLoop()
             mScene->Update();
 
         auto frameDuration = SDL_GetTicks() - frameStart;
-        if( frameDuration < TARGET_DURATION )
-            SDL_Delay(TARGET_DURATION-frameDuration);
-        SDL_SetWindowTitle(mpWindow,("Pokemon Émeraude [ FPS : "+std::to_string(1000/(SDL_GetTicks() - frameStart))+" ]").c_str());
+        if( frameDuration < mTargetFrameDuration )
+            SDL_Delay(mTargetFrameDuration-frameDuration);
+
+        mDeltaTime = (float)(SDL_GetTicks() - frameStart)/1000.0f;
+
+        char titleBuffer [50];
+        sprintf(titleBuffer, "%s [ FPS : %d ]", mpTitle, (int)(1 / mDeltaTime));
+
+        SDL_SetWindowTitle(mpWindow,titleBuffer);
     }
     this->Clean();
 }
@@ -71,13 +82,21 @@ void GameEngine::Clean()
     SDL_Quit();
 }
 
-bool GameEngine::IsRunnig() const
-{
-    return this->mbRunning;
-}
-
 void GameEngine::LoadScene(Scene *scene)
 {
     this->mScene = scene;
+}
+
+void GameEngine::SetTargetFrameRate(int frameRate)
+{
+    if (frameRate<=MIN_FRAME_RATE)
+        frameRate = MIN_FRAME_RATE;
+
+    mTargetFrameDuration = 1000/frameRate;
+}
+
+float GameEngine::GetDeltaTime() const
+{
+    return mDeltaTime;
 }
 
