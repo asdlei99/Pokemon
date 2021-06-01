@@ -5,5 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 INCLUDE_DIRECTORIES(SDL/include)
 LINK_DIRECTORIES(SDL/lib/x64)
-add_executable(PokemonPP WIN32 main.cpp Game/Game.cpp Game/Game.h Manager/Texture/TextureManager.cpp Manager/Texture/TextureManager.h)
+
+file(GLOB sources
+        ${PROJECT_SOURCE_DIR}/*.cpp
+        ${PROJECT_SOURCE_DIR}/Game/*.cpp
+        ${PROJECT_SOURCE_DIR}/Manager/Texture/*.cpp
+        )
+
+add_executable(PokemonPP WIN32 ${sources})
+
 TARGET_LINK_LIBRARIES(PokemonPP SDL2main.lib SDL2.lib SDL2_image.lib)
