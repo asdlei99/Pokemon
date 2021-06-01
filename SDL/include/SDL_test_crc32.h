@@ -102,7 +102,7 @@ int SDLTest_Crc32CalcBuffer(SDLTest_Crc32Context * crcContext, CrcUint8 *inBuf, 
 
 
 /**
- * \brief clean up CRC context
+ * \brief Clean up CRC context
  *
  * \param crcContext        pointer to context variable
  *

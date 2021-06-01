@@ -8,10 +8,10 @@ LINK_DIRECTORIES(SDL/lib/x64)
 
 file(GLOB sources
         ${PROJECT_SOURCE_DIR}/*.cpp
-        ${PROJECT_SOURCE_DIR}/Game/*.cpp
-        ${PROJECT_SOURCE_DIR}/Manager/Texture/*.cpp
+        ${PROJECT_SOURCE_DIR}/Engine/*.cpp
+        #${PROJECT_SOURCE_DIR}/Manager/Texture/*.cpp
         )
 
-add_executable(PokemonPP WIN32 ${sources})
+add_executable(PokemonPP WIN32 ${sources} Engine/Scene.cpp Engine/Scene.h Engine/GameObject.h)
 
 TARGET_LINK_LIBRARIES(PokemonPP SDL2main.lib SDL2.lib SDL2_image.lib)

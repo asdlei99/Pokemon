@@ -281,11 +281,11 @@ extern DECLSPEC void SDLCALL SDL_WaitThread(SDL_Thread * thread, int *status);
  *  Once a thread is detached, you should usually assume the SDL_Thread isn't
  *  safe to reference again, as it will become invalid immediately upon
  *  the detached thread's exit, instead of remaining until someone has called
- *  SDL_WaitThread() to finally clean it up. As such, don't detach the same
+ *  SDL_WaitThread() to finally Clean it up. As such, don't detach the same
  *  thread more than once.
  *
  *  If a thread has already exited when passed to SDL_DetachThread(), it will
- *  stop waiting for a call to SDL_WaitThread() and clean up immediately.
+ *  stop waiting for a call to SDL_WaitThread() and Clean up immediately.
  *  It is not safe to detach a thread that might be used with SDL_WaitThread().
  *
  *  You may not call SDL_WaitThread() on a thread that has been detached.
