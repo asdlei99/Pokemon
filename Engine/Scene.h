@@ -1,8 +1,8 @@
 #ifndef POKEMONPP_ENGINE_SCENE_H
 #define POKEMONPP_ENGINE_SCENE_H
 
-#include "GameObject.h"
 #include <list>
+#include "GameObject.h"
 
 class Scene
 {
@@ -13,6 +13,7 @@ public:
     ~Scene();
     void AddGameObject(GameObject *gameObject);
     void Update();
+    void Render(SDL_Renderer *pRenderer);
 };
 
 #endif

@@ -1,25 +1,27 @@
 #include "TextureManager.h"
 
-bool TextureManager::load(char *filePath, char *id, SDL_Renderer *pRenderer)
+TextureManager *TextureManager::spInstance = nullptr;
+
+bool TextureManager::load(const std::string& filePath,const std::string& id, SDL_Renderer *pRenderer)
 {
-    SDL_Surface* pTempSurface = IMG_Load(filePath);
+    SDL_Surface* pTempSurface = IMG_Load(filePath.c_str());
 
     if (pTempSurface == nullptr)
         return false;
 
-    SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+    SDL_Texture *pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
     SDL_FreeSurface(pTempSurface);
 
     if (pTexture != nullptr)
     {
-        mTextureMap.at(id) = pTexture;
+        mTextureMap.insert_or_assign(id, pTexture);
         return true;
     }
 
     return false;
 }
 
-void TextureManager::draw(char *id, int x, int y, int width, int height, SDL_Renderer *pRenderer, SDL_RendererFlip flip)
+void TextureManager::draw(const std::string& id, int x, int y, int width, int height, SDL_Renderer *pRenderer, SDL_RendererFlip flip)
 {
     SDL_Rect srcRect;
     SDL_Rect destRect;
@@ -37,7 +39,7 @@ void TextureManager::draw(char *id, int x, int y, int width, int height, SDL_Ren
     SDL_RenderCopyEx(pRenderer, mTextureMap.at(id), &srcRect, &destRect, 0, nullptr, flip);
 }
 
-void TextureManager::drawFrame(char *id, int x, int y, int width, int height, int currentRow, int currentFrame,
+void TextureManager::drawFrame(const std::string& id, int x, int y, int width, int height, int currentRow, int currentFrame,
                                SDL_Renderer *pRenderer, SDL_RendererFlip flip)
 {
     SDL_Rect srcRect;
@@ -55,15 +57,13 @@ void TextureManager::drawFrame(char *id, int x, int y, int width, int height, in
 
     SDL_RenderCopyEx(pRenderer, mTextureMap.at(id), &srcRect, &destRect, 0, nullptr, flip);
 }
+
 TextureManager *TextureManager::Instance()
 {
-    if (s_pInstance == nullptr)
-    {
-        s_pInstance = new TextureManager();
-        return s_pInstance;
-    }
+    if (spInstance == nullptr)
+        spInstance = new TextureManager();
 
-    return s_pInstance;
+    return spInstance;
 }
 
 

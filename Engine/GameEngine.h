@@ -1,12 +1,10 @@
 #ifndef POKEMONPP_ENGINE_GAME_H
 #define POKEMONPP_ENGINE_GAME_H
 
-#include "SDL.h"
-#include "SDL_image.h"
-#include "Scene.h"
 #include <string>
+#include "Scene.h"
 
-#define DEFAULT_TARGET_FRAME_RATE 30
+#define DEFAULT_TARGET_FRAME_RATE 60
 #define MIN_FRAME_RATE 15
 
 class GameEngine
@@ -18,13 +16,16 @@ private:
     char         *mpTitle{};
     bool          mbRunning{};
     int           mTargetFrameDuration{};
-    float         mDeltaTime = 0;
+    float         mDeltaTime = 0.0f;
     Scene        *mScene{};
 
+    static GameEngine *spInstance;
+    GameEngine() = default;
+
 public:
-    GameEngine();
     ~GameEngine();
 
+    static GameEngine *Instance();
     int Init(char* title, int xpos, int ypos, int width, int height, int flags);
     void MainLoop();
     void LoadScene(Scene *scene);
@@ -33,6 +34,7 @@ public:
 
     void SetTargetFrameRate(int frameRate);
     float GetDeltaTime() const;
+    SDL_Renderer *getRenderer() const;
 };
 
 #endif

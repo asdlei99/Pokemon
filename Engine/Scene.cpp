@@ -14,7 +14,17 @@ void Scene::AddGameObject(GameObject *gameObject)
 void Scene::Update()
 {
     for(GameObject *gameObject : mGameObjects){
-        gameObject->Draw();
         gameObject->Update();
     }
+}
+
+void Scene::Render(SDL_Renderer *pRenderer)
+{
+    SDL_RenderClear(pRenderer);
+
+    for(GameObject *gameObject : mGameObjects){
+        gameObject->Draw(pRenderer);
+    }
+
+    SDL_RenderPresent(pRenderer);
 }

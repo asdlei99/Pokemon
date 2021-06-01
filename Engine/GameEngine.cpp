@@ -1,9 +1,6 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine()
-{
-    this->SetTargetFrameRate(DEFAULT_TARGET_FRAME_RATE);
-}
+GameEngine *GameEngine::spInstance = nullptr;
 
 GameEngine::~GameEngine()
 {
@@ -30,6 +27,7 @@ int GameEngine::Init(char* title, int xpos, int ypos, int width, int height, int
     if (mpRenderer == nullptr)
         return -1;
 
+    this->SetTargetFrameRate(DEFAULT_TARGET_FRAME_RATE);
     this->mbRunning = true;
     return 0;
 }
@@ -43,7 +41,10 @@ void GameEngine::MainLoop()
         this->HandleEvents();
 
         if( mScene != nullptr )
+        {
             mScene->Update();
+            mScene->Render(mpRenderer);
+        }
 
         auto frameDuration = SDL_GetTicks() - frameStart;
         if( frameDuration < mTargetFrameDuration )
@@ -98,5 +99,18 @@ void GameEngine::SetTargetFrameRate(int frameRate)
 float GameEngine::GetDeltaTime() const
 {
     return mDeltaTime;
+}
+
+GameEngine *GameEngine::Instance()
+{
+    if (spInstance == nullptr)
+        spInstance = new GameEngine();
+
+    return spInstance;
+}
+
+SDL_Renderer *GameEngine::getRenderer() const
+{
+    return mpRenderer;
 }
 
