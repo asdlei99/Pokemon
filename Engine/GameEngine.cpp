@@ -43,7 +43,7 @@ void GameEngine::MainLoop()
         auto frameDuration = SDL_GetTicks() - frameStart;
         if( frameDuration < TARGET_DURATION )
             SDL_Delay(TARGET_DURATION-frameDuration);
-        SDL_SetWindowTitle(mpWindow,("Pokemon Émeraude | FPS:"+std::to_string(1000/(SDL_GetTicks() - frameStart))).c_str());
+        SDL_SetWindowTitle(mpWindow,("Pokemon Émeraude [ FPS : "+std::to_string(1000/(SDL_GetTicks() - frameStart))+" ]").c_str());
     }
     this->Clean();
 }
